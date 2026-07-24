@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log in — Stackly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#e6e1ee;
+    --ink:#120f2c;
+    --ink-soft:rgba(18,15,44,0.62);
+    --ink-faint:rgba(18,15,44,0.4);
+    --teal:#18b9ac;
+    --coral:#ef4d78;
+    --coral-deep:#d43d68;
+    --tan:#d6cfe2;
+    --violet:#7a4dff;
+    --line:rgba(18,15,44,0.16);
+    --display:'Fraunces', serif;
+    --mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{overflow-x:hidden; height:100%;}
+  body{
+    height:100vh;
+    overflow:hidden;
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    display:flex; flex-direction:column;
+  }
+.logo{display:flex;align-items:center;gap:0;font-family:'Space Grotesk', sans-serif;font-size:1.3rem;font-weight:600;text-decoration:none;color:inherit;}
+  .logo-mark{width:26px;height:32px;object-fit:contain;flex-shrink:0;}
+  .logo .lg-stack{color:#ffffff;}
+  .logo .lg-ly{color:var(--rose);}
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer;}
+  h1,h2{font-family:var(--display); letter-spacing:-0.01em;}
+
+  .frame-bar{height:7px; background:var(--ink); flex-shrink:0;}
+
+  /* ===== split screen shell ===== */
+  .page-body{flex:1; min-height:0; display:flex; overflow:hidden;}
+
+  .visual-side{
+    position:relative; order:1; flex:1 1 46%; max-width:46%;
+    overflow:hidden; background:var(--ink);
+  }
+  .visual-side .bg-photo{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    filter:saturate(1.05);
+  }
+  .visual-side::before{
+    content:''; position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(18,15,44,0.15) 0%, rgba(18,15,44,0.35) 55%, rgba(18,15,44,0.86) 100%),
+      linear-gradient(100deg, rgba(122,77,255,0.55), rgba(18,15,44,0.35));
+    mix-blend-mode:multiply;
+  }
+  .visual-side::after{
+    content:''; position:absolute; inset:0;
+    background:rgba(239,77,120,0.14); mix-blend-mode:color;
+  }
+  .visual-content{
+    position:relative; z-index:2; height:100%;
+    display:flex; flex-direction:column; justify-content:flex-end; gap:22px;
+    padding:44px 46px 50px;
+  }
+ .visual-logo{
+    display:inline-flex; align-items:center; gap:0; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:24px; color:#fff;
+    width:fit-content; text-decoration:none; filter:drop-shadow(0 2px 10px rgba(0,0,0,0.45));
+  }
+  .visual-logo-mark{width:30px; height:37px; object-fit:contain; flex-shrink:0;}
+  .visual-logo b{color:var(--coral);}
+
+  .visual-copy{
+    max-width:420px;
+    background:rgba(18,15,44,0.4); border:1px solid rgba(255,255,255,0.16); backdrop-filter:blur(10px);
+    padding:28px 30px; border-radius:20px;
+    box-shadow:0 20px 40px -18px rgba(0,0,0,0.55);
+  }
+  .visual-copy .v-eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.22em; text-transform:uppercase;
+    color:#e8dcc4; font-weight:600; display:flex; align-items:center; gap:10px; margin-bottom:16px;
+  }
+  .visual-copy .v-eyebrow .dash{width:22px; height:2px; background:var(--coral); display:inline-block;}
+  .visual-copy h2{
+    font-size:clamp(1.7rem, 2.6vw, 2.35rem); line-height:1.2; color:#fff; font-weight:700; margin-bottom:16px;
+  }
+  .visual-copy p{font-size:15px; line-height:1.65; color:rgba(255,255,255,0.78); margin-bottom:26px;}
+
+  .visual-stats{display:flex; gap:28px;}
+  .visual-stats div{display:flex; flex-direction:column; gap:3px;}
+  .visual-stats strong{font-family:var(--display); font-size:1.5rem; color:#fff; font-weight:700;}
+  .visual-stats span{font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.6); font-weight:600;}
+
+  .auth-side{flex:1 1 54%; max-width:54%; order:2; display:flex; flex-direction:column; padding:36px 24px 60px; overflow-y:auto;}
+
+  .top-row{width:100%; max-width:520px; margin:0 auto 26px; display:flex; justify-content:flex-end;}
+  .back-home{display:inline-flex; align-items:center; gap:8px; font-size:14px; color:var(--ink-soft); font-weight:500;}
+  .back-home:hover{color:var(--ink);}
+
+  .login-wrap{width:100%; max-width:520px; margin:auto;}
+
+  /* auth pill */
+  .auth-tabs{
+    display:grid; grid-template-columns:1fr 1fr; background:var(--tan);
+    border-radius:100px; padding:5px; margin-bottom:34px; position:relative;
+  }
+  .auth-tabs button{
+    position:relative; z-index:2; padding:15px 0; border-radius:100px; font-size:15.5px; font-weight:700;
+    background:none; color:var(--ink-soft); transition:color .3s ease;
+  }
+  .auth-tabs button.active{color:#fff;}
+  .auth-tabs .at-thumb{
+    position:absolute; top:5px; left:5px; width:calc(50% - 5px); height:calc(100% - 10px);
+    background:var(--ink); border-radius:100px; transition:transform .38s cubic-bezier(.2,.9,.25,1);
+  }
+  .auth-tabs[data-auth="signup"] .at-thumb{transform:translateX(100%);}
+
+  .eyebrow{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+  .eyebrow .dash{width:22px; height:2px; background:var(--teal); display:inline-block;}
+  .eyebrow span{font-family:var(--mono); font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--teal); font-weight:600;
+    transition:opacity .18s ease, transform .18s ease;}
+
+  h1#lcTitle{font-size:clamp(1.9rem, 3.4vw, 2.5rem); font-weight:700; margin-bottom:28px; line-height:1.18;
+    transition:opacity .18s ease, transform .18s ease;}
+
+  .role-toggle{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;}
+  .role-toggle button{
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    padding:16px 0; border-radius:14px; font-size:15px; font-weight:700; color:var(--ink);
+    background:#fff; border:1.5px solid var(--line); transition:background .25s ease, border-color .25s ease;
+  }
+  .role-toggle button svg{width:17px; height:17px;}
+  .role-toggle button.active{background:var(--tan); border-color:rgba(18,15,44,0.28);}
+
+  .role-line{font-family:var(--mono); font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint);
+    margin-bottom:26px; transition:opacity .18s ease;}
+  .role-line b{color:var(--ink); font-weight:700;}
+
+  .swap-out{opacity:0 !important; transform:translateY(4px);}
+
+  .forms-wrap{position:relative; transition:height .38s cubic-bezier(.2,.9,.25,1); overflow:hidden;}
+  .forms-wrap form{transition:opacity .28s ease, transform .28s ease; width:100%;}
+  .forms-wrap form.form-hidden{position:absolute; top:0; left:0; right:0; opacity:0; transform:translateY(6px); pointer-events:none;}
+  .forms-wrap form.form-visible{position:relative; opacity:1; transform:translateY(0);}
+
+  .form-field{display:flex; flex-direction:column; gap:9px; margin-bottom:20px;}
+  .form-field label{font-size:12.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink);}
+  .form-field input{
+    width:100%; padding:16px 18px; border-radius:12px; border:1.5px solid rgba(18,15,44,0.14); background:#fff;
+    font-size:15px; font-family:inherit; color:var(--ink); transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  .form-field input::placeholder{color:rgba(18,15,44,0.4);}
+  .form-field input:focus{outline:none; border-color:var(--teal); box-shadow:0 0 0 4px rgba(24,185,172,0.14);}
+  .form-field.error input{border-color:var(--coral); background:rgba(239,77,120,0.06);}
+  .form-field .field-error{display:none; font-size:12.5px; color:var(--coral-deep); font-weight:600;}
+  .form-field.error .field-error{display:block;}
+
+  .row-between{display:flex; align-items:center; justify-content:space-between; margin-bottom:26px;}
+  .remember{display:flex; align-items:center; gap:9px; font-size:14.5px; color:var(--ink);}
+  .remember input{accent-color:var(--teal); width:16px; height:16px;}
+  .forgot{font-size:14.5px; font-weight:600; color:var(--coral-deep);}
+  .forgot:hover{text-decoration:underline;}
+
+  .btn-submit{
+    width:100%; padding:18px 0; border-radius:100px; background:var(--coral); color:#fff;
+    font-weight:700; font-size:16px; display:flex; align-items:center; justify-content:center; gap:9px;
+    box-shadow:0 16px 30px -16px rgba(239,77,120,0.7);
+    transition:transform .3s cubic-bezier(.2,.9,.25,1), box-shadow .3s ease, background .3s ease;
+  }
+  .btn-submit:hover{transform:translateY(-2px); background:var(--coral-deep); box-shadow:0 20px 36px -16px rgba(239,77,120,0.8);}
+  .btn-submit .spin{
+    width:15px; height:15px; border-radius:50%; border:2px solid rgba(255,255,255,0.35); border-top-color:#fff;
+    display:none; animation:spin .7s linear infinite;
+  }
+  .btn-submit.loading .spin{display:inline-block;}
+  .btn-submit.loading .btn-label{opacity:0.7;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .switch-line{text-align:center; margin-top:26px; font-size:14.5px; color:var(--ink-soft);}
+  .switch-line a{color:var(--teal); font-weight:700;}
+  .switch-line a:hover{text-decoration:underline;}
+
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); opacity:0;
+    background:var(--ink); color:#fff; padding:14px 22px; border-radius:100px; font-size:13.5px; font-weight:600;
+    display:flex; align-items:center; gap:10px; pointer-events:none; transition:opacity .3s ease, transform .3s ease; z-index:50;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  .toast.error{background:var(--coral-deep);}
+  .toast::before{content:'✓'; color:var(--teal);}
+  .toast.error::before{content:'!'; color:#fff;}
+
+  @media(max-width:960px){
+    .visual-side{display:none;}
+    .auth-side{flex:1 1 100%; max-width:100%;}
+  }
+  @media(max-width:560px){
+    .role-toggle{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="frame-bar"></div>
+
+<div class="page-body">
+
+  <div class="auth-side">
+    <div class="top-row">
+      <a href="index.html" class="back-home">&#8592; Back to Home</a>
+    </div>
+
+    <div class="login-wrap">
+      <div class="auth-tabs" id="authTabs" data-auth="signin">
+        <div class="at-thumb"></div>
+        <button type="button" class="active" data-auth="signin">Log In</button>
+        <button type="button" data-auth="signup">Sign Up</button>
+      </div>
+
+      <div class="eyebrow"><span class="dash"></span><span id="eyebrowText">Welcome back</span></div>
+      <h1 id="lcTitle">Log in to your account.</h1>
+
+      <div class="role-toggle" data-role="user" id="roleToggle">
+        <button type="button" class="active" data-role="user">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+          User
+        </button>
+        <button type="button" data-role="admin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6l8-4z"/></svg>
+          Admin
+        </button>
+      </div>
+      <div class="role-line" id="roleLine">SIGNING IN AS A <b>USER</b></div>
+
+      <div class="forms-wrap" id="formsWrap">
+        <form id="loginForm" class="form-visible" novalidate>
+          <div class="form-field" id="fieldEmail">
+            <label for="loginEmail" id="labelEmail">Email address</label>
+            <input type="email" id="loginEmail" name="email" placeholder="you@email.com" required>
+            <span class="field-error">Enter a valid email address.</span>
+          </div>
+          <div class="form-field" id="fieldPassword">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" name="password" placeholder="••••••••" required minlength="6">
+            <span class="field-error">Password must be at least 6 characters.</span>
+          </div>
+          <div class="row-between">
+            <label class="remember"><input type="checkbox" name="remember"> Remember me</label>
+            <a href="./404.html" class="forgot">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span class="btn-label" id="submitLabel">Log In &#8594;</span>
+            <span class="spin"></span>
+          </button>
+          <p class="switch-line">New here? <a href="#" data-auth="signup">Create an account</a></p>
+        </form>
+
+        <form id="signupForm" class="form-hidden" style="display:none;" novalidate>
+<div class="form-field" id="fieldName">
+            <label for="signupName">Full name</label>
+            <input type="text" id="signupName" name="name" placeholder="Your name" pattern="[A-Za-z\s]+" required>
+            <span class="field-error">Name can only contain letters.</span>
+          </div>
+          <div class="form-field" id="fieldSignupEmail">
+            <label for="signupEmail" id="labelSignupEmail">Email address</label>
+            <input type="email" id="signupEmail" name="email" placeholder="you@email.com" required>
+            <span class="field-error">Enter a valid email address.</span>
+          </div>
+          <div class="form-field" id="fieldSignupPassword">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" name="password" placeholder="Create a password" required minlength="6">
+            <span class="field-error">Password must be at least 6 characters.</span>
+          </div>
+          <div class="form-field" id="fieldConfirmPassword">
+            <label for="confirmPassword">Confirm password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" required minlength="6">
+            <span class="field-error">Passwords don't match.</span>
+          </div>
+          <button type="submit" class="btn-submit" id="signupBtn">
+            <span class="btn-label" id="signupLabel">Create Account &#8594;</span>
+            <span class="spin"></span>
+          </button>
+          <p class="switch-line">Already have an account? <a href="#" data-auth="signin">Log in</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="visual-side">
+    <img src="./assets/about bg.webp" alt="Learners collaborating on a project" class="bg-photo">
+    <div class="visual-content">
+      <a href="index.html" class="visual-logo"><img src="stackly-logo.webp" alt="Stackly logo" class="visual-logo-mark">Stack<b>ly</b></a>
+
+      <div class="visual-copy">
+        <div class="v-eyebrow"><span class="dash"></span>Skill Development Academy</div>
+        <h2>Your next skill, one login away.</h2>
+        <p>Cohort-based courses, real mentors, and a curriculum built to get you hired — pick up right where you left off.</p>
+        <div class="visual-stats">
+          <div><strong>40+</strong><span>Courses</span></div>
+          <div><strong>12k</strong><span>Learners</span></div>
+          <div><strong>92%</strong><span>Hired</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="frame-bar"></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const roleToggle = document.getElementById('roleToggle');
+  const toggleBtns = roleToggle.querySelectorAll('button');
+  const lcTitle = document.getElementById('lcTitle');
+  const eyebrowText = document.getElementById('eyebrowText');
+  const roleLine = document.getElementById('roleLine');
+  const labelEmail = document.getElementById('labelEmail');
+  const emailInput = document.getElementById('loginEmail');
+  const submitLabel = document.getElementById('submitLabel');
+  const labelSignupEmail = document.getElementById('labelSignupEmail');
+  const signupEmailInput = document.getElementById('signupEmail');
+
+  const authTabs = document.getElementById('authTabs');
+  const formsWrap = document.getElementById('formsWrap');
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  let authMode = 'signin';
+  let switching = false;
+
+  const copy = {
+    user:{
+      signin:{ eyebrow:'Welcome back', title:'Log in to your account.', email:'Email address', placeholder:'you@email.com', submit:'Log In &#8594;' },
+      signup:{ eyebrow:'Join the academy', title:'Create your learner account.', email:'Email address', placeholder:'you@email.com', submit:'Create Account &#8594;' }
+    },
+    admin:{
+      signin:{ eyebrow:'Welcome back', title:'Log in to the admin panel.', email:'Admin email', placeholder:'advisor@stackly.academy', submit:'Log In &#8594;' },
+      signup:{ eyebrow:'Advisor access', title:'Create an advisor account.', email:'Admin email', placeholder:'advisor@stackly.academy', submit:'Create Account &#8594;' }
+    }
+  };
+
+  function fadeSwap(elements, mutate){
+    elements.forEach(el => el && el.classList.add('swap-out'));
+    setTimeout(() => {
+      mutate();
+      elements.forEach(el => el && el.classList.remove('swap-out'));
+    }, 160);
+  }
+
+  function applyCopy(){
+    const role = roleToggle.dataset.role;
+    const c = copy[role][authMode];
+    fadeSwap([lcTitle, eyebrowText, labelEmail, labelSignupEmail, roleLine], () => {
+      lcTitle.textContent = c.title;
+      eyebrowText.textContent = c.eyebrow;
+      labelEmail.textContent = c.email;
+      emailInput.placeholder = c.placeholder;
+      submitLabel.innerHTML = c.submit;
+      if(labelSignupEmail){ labelSignupEmail.textContent = c.email; }
+      if(signupEmailInput){ signupEmailInput.placeholder = c.placeholder; }
+      document.getElementById('signupLabel').innerHTML = c.submit;
+      const article = role === 'admin' ? 'AN' : 'A';
+      roleLine.innerHTML = (authMode === 'signin' ? 'SIGNING IN AS ' : 'SIGNING UP AS ') + article + ' <b>' + role.toUpperCase() + '</b>';
+    });
+  }
+
+  function setRole(role){
+    if(role === roleToggle.dataset.role) return;
+    roleToggle.dataset.role = role;
+    toggleBtns.forEach(b => b.classList.toggle('active', b.dataset.role === role));
+    applyCopy();
+  }
+
+  function switchForms(mode){
+    if(switching || mode === authMode) return;
+    switching = true;
+    authMode = mode;
+
+    const fromForm = mode === 'signup' ? loginForm : signupForm;
+    const toForm = mode === 'signup' ? signupForm : loginForm;
+
+    authTabs.dataset.auth = mode;
+    authTabs.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.auth === mode));
+
+    formsWrap.style.height = formsWrap.offsetHeight + 'px';
+    void formsWrap.offsetHeight;
+
+    fromForm.classList.remove('form-visible');
+    fromForm.classList.add('form-hidden');
+
+    toForm.style.display = 'block';
+    toForm.classList.add('form-hidden');
+    toForm.classList.remove('form-visible');
+    const targetHeight = toForm.scrollHeight;
+
+    requestAnimationFrame(() => {
+      formsWrap.style.height = targetHeight + 'px';
+      toForm.classList.remove('form-hidden');
+      toForm.classList.add('form-visible');
+    });
+
+    applyCopy();
+
+    setTimeout(() => {
+      fromForm.style.display = 'none';
+      formsWrap.style.height = 'auto';
+      switching = false;
+    }, 400);
+  }
+
+  toggleBtns.forEach(btn => btn.addEventListener('click', () => setRole(btn.dataset.role)));
+  authTabs.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => switchForms(btn.dataset.auth)));
+  document.querySelectorAll('.switch-line a[data-auth]').forEach(a => {
+    a.addEventListener('click', (e) => { e.preventDefault(); switchForms(a.dataset.auth); });
+  });
+
+  const toast = document.getElementById('toast');
+  function showToast(msg, isError){
+    toast.textContent = msg;
+    toast.classList.toggle('error', !!isError);
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+  function fieldOf(input){ return input.closest('.form-field'); }
+  function validateField(input){
+    const field = fieldOf(input);
+    const valid = input.checkValidity();
+    field.classList.toggle('error', !valid);
+    return valid;
+  }
+
+  function wireValidation(form){
+    form.querySelectorAll('input').forEach(input => {
+      input.addEventListener('blur', () => validateField(input));
+      input.addEventListener('input', () => { if(fieldOf(input).classList.contains('error')) validateField(input); });
+    });
+  }
+wireValidation(loginForm);
+  wireValidation(signupForm);
+
+  const signupNameInput = document.getElementById('signupName');
+  signupNameInput.addEventListener('input', () => {
+    const cleaned = signupNameInput.value.replace(/[^A-Za-z\s]/g, '');
+    if(cleaned !== signupNameInput.value){ signupNameInput.value = cleaned; }
+  });
+
+  function goToDashboard(role, email, remember){
+    const session = { role, email, remember: !!remember, loggedInAt: Date.now() };
+    localStorage.setItem('stackly_session', JSON.stringify(session));
+    setTimeout(() => {
+      window.location.href = role === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html';
+    }, 600);
+  }
+
+  const submitBtn = document.getElementById('submitBtn');
+  loginForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const inputs = loginForm.querySelectorAll('input[required]');
+    let allValid = true;
+    inputs.forEach(input => { if(!validateField(input)) allValid = false; });
+    if(!allValid){ showToast('Please fix the highlighted fields.', true); return; }
+
+    const role = roleToggle.dataset.role;
+    submitBtn.classList.add('loading');
+    setTimeout(() => {
+      showToast('Signed in — redirecting…');
+      goToDashboard(role, emailInput.value.trim(), loginForm.remember.checked);
+    }, 700);
+  });
+
+  const signupBtn = document.getElementById('signupBtn');
+  const passwordInput = document.getElementById('signupPassword');
+  const confirmInput = document.getElementById('confirmPassword');
+
+  function passwordsMatch(){
+    const match = passwordInput.value === confirmInput.value;
+    fieldOf(confirmInput).classList.toggle('error', !match);
+    return match;
+  }
+  confirmInput.addEventListener('input', passwordsMatch);
+  passwordInput.addEventListener('input', () => { if(confirmInput.value) passwordsMatch(); });
+
+signupForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const inputs = signupForm.querySelectorAll('input[required]');
+    let allValid = true;
+    inputs.forEach(input => { if(!validateField(input)) allValid = false; });
+    if(!passwordsMatch()) allValid = false;
+    if(!allValid){ showToast('Please fix the highlighted fields.', true); return; }
+
+    signupBtn.classList.add('loading');
+    setTimeout(() => {
+      showToast('Account created — please log in.');
+      signupBtn.classList.remove('loading');
+      signupForm.reset();
+      switchForms('signin');
+    }, 700);
+  });
+
+  (function(){
+    try{
+      const existing = JSON.parse(localStorage.getItem('stackly_session') || 'null');
+      if(existing && existing.role){ setRole(existing.role); return; }
+    }catch(err){}
+    applyCopy();
+  })();
+</script>
+
+</body>
+</html>

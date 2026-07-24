@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Stackly Skill Development Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  :root{
+    --ink:#120f2c;
+    --ink-soft:#564f7a;
+    --paper:#e6e1ee;
+    --paper-dim:#d6cfe2;
+    --violet:#7a4dff;
+    --cyan:#18b9ac;
+    --rose:#ef4d78;
+    --space-deep:#05040f;
+    --space-mid:#0e0a28;
+    --line: rgba(18,15,44,0.18);
+    --header-h: 84px;
+    --max: 1720px;
+    --display: 'Space Grotesk', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit; cursor:pointer; border:none; background:none;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 32px;}
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--cyan);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{content:''; width:22px; height:2px; background:var(--violet); display:inline-block;}
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; line-height:1.08; letter-spacing:-0.01em;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 26px; border-radius:100px; font-weight:600; font-size:15px;
+    transition:transform .35s cubic-bezier(.2,.9,.25,1), box-shadow .35s ease, background .3s ease, color .3s ease;
+    position:relative; overflow:hidden;
+  }
+  .btn-primary{background:var(--ink); color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 14px 30px -12px rgba(19,27,51,0.55);}
+  .btn-outline{border:1.5px solid var(--line); color:var(--ink);}
+  .btn-outline:hover{border-color:var(--ink); transform:translateY(-3px);}
+  .btn-login{
+    border:1.5px solid var(--ink); border-radius:100px; padding:10px 22px;
+    font-size:14px; font-weight:600; transition:background .3s ease, color .3s ease, border-color .3s ease;
+  }
+  .btn-login:hover{background:var(--ink); color:var(--paper);}
+
+  /* magnetic button glint */
+  .btn .glint{
+    position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(115deg, transparent, rgba(246,244,239,0.35), transparent);
+    transform:skewX(-18deg);
+    pointer-events:none;
+  }
+  .btn-primary:hover .glint{ animation:glintSweep .9s ease forwards; }
+  @keyframes glintSweep{
+    from{left:-60%;}
+    to{left:130%;}
+  }
+
+  /* ===== HEADER ===== */
+  header.site-header{
+    position:fixed; top:0; left:0; right:0; z-index:900;
+    height:var(--header-h);
+    display:flex; align-items:center;
+    background:rgba(5,4,15,0.88);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(246,244,239,0.12);
+    transition:background .4s ease, box-shadow .4s ease, border-color .4s ease;
+  }
+  header.site-header.scrolled{
+    background:rgba(5,4,15,0.98);
+    box-shadow:0 12px 34px -18px rgba(0,0,0,0.55);
+    border-bottom-color:rgba(246,244,239,0.2);
+  }
+  .header-inner{
+    width:100%; max-width:var(--max); margin:0 auto; padding:0 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .logo{display:flex;align-items:center;gap:0;font-family:var(--display);font-size:1.3rem;font-weight:600;text-decoration:none;color:inherit;}
+  .logo-mark{width:26px;height:32px;object-fit:contain;flex-shrink:0;}
+  .logo .lg-stack{color:#ffffff;}
+  .logo .lg-ly{color:var(--rose);}
+  nav.main-nav{display:flex; align-items:center; gap:30px;}
+  nav.main-nav a{
+    font-size:14.5px; font-weight:500; color:rgba(246,244,239,0.72); position:relative; padding:4px 0; transition:color .3s ease;
+  }
+  nav.main-nav a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--violet);
+    transition:width .3s ease;
+  }
+  nav.main-nav a:hover{color:var(--paper);}
+  nav.main-nav a:hover::after{width:100%;}
+  .header-actions{display:flex; align-items:center; gap:18px;}
+  .header-actions .btn-login{border-color:rgba(246,244,239,0.4); color:var(--paper);}
+  .header-actions .btn-login:hover{background:var(--paper); color:var(--ink);}
+  .hamburger{
+    display:none; flex-direction:column; gap:5px; width:30px; height:22px; z-index:1200; position:relative;
+  }
+  .hamburger span{display:block; height:2px; width:100%; background:var(--paper); border-radius:2px; transition:transform .35s ease, opacity .35s ease;}
+  .hamburger.active span:nth-child(1){transform:translateY(8.5px) rotate(45deg);}
+  .hamburger.active span:nth-child(2){opacity:0;}
+  .hamburger.active span:nth-child(3){transform:translateY(-8.5px) rotate(-45deg);}
+
+  .mobile-menu{
+    position:fixed; inset:0; background:rgba(5,4,15,0.95); backdrop-filter:blur(22px); z-index:1100;
+    display:flex; flex-direction:column; justify-content:center; align-items:flex-start;
+    padding:40px; gap:8px;
+    transform:translateX(100%);
+    transition:transform .55s cubic-bezier(.2,.9,.25,1);
+  }
+  .mobile-menu.open{transform:translateX(0);}
+  .menu-close{
+    position:absolute; top:26px; right:24px; width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--paper);
+    border:1.5px solid rgba(246,244,239,0.3); z-index:1210; transition:transform .3s ease, background .3s ease;
+  }
+  .menu-close:hover{background:rgba(246,244,239,0.14); transform:rotate(90deg);}
+  .mobile-menu a{
+    font-family:'Space Grotesk', sans-serif; font-size:32px; color:var(--paper); font-weight:600;
+    padding:11px 0; border-bottom:1px solid rgba(246,244,239,0.12); width:100%;
+  }
+  .mobile-menu .btn-primary{margin-top:26px; background:var(--violet); color:var(--ink);}
+
+  /* ===== PAGE LOAD TRANSITION ===== */
+  .page-transition{
+    position:fixed; inset:0; z-index:3000; background:var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    pointer-events:none;
+  }
+  .page-transition span{
+    font-family:'Space Grotesk', sans-serif; color:var(--paper); font-size:15px; letter-spacing:0.08em;
+    text-transform:uppercase; opacity:.7;
+  }
+
+  .blueprint-dots{
+    position:absolute; inset:0; z-index:-1; opacity:0.5;
+    background-image:radial-gradient(var(--line) 1.4px, transparent 1.4px);
+    background-size:26px 26px;
+  }
+
+  /* ===== STATS BAR ===== */
+  .stats-bar{
+    border-bottom:1px solid var(--line);
+    padding:34px 0;
+  }
+  .stats-bar .wrap{display:grid; grid-template-columns:repeat(4, 1fr); gap:24px;}
+  .stat{min-width:0;}
+  .stat b{
+    font-family:'Space Grotesk', sans-serif; font-size:clamp(22px,4vw,42px); display:block;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .reveal-stat{opacity:0; transform:translateY(26px);}
+  .stat span{font-size:13px; color:var(--ink-soft);}
+  @media (max-width:760px){
+    .stats-bar .wrap{grid-template-columns:repeat(2, 1fr); row-gap:28px;}
+    .stat b{font-size:clamp(22px,7vw,32px);}
+  }
+
+  /* ===== SECTION GENERIC ===== */
+  section{padding:72px 0;}
+  .section-head{max-width:640px; margin-bottom:40px;}
+  .section-head h2{font-size:clamp(28px, 3.6vw, 44px); font-weight:700;}
+  .section-head p{margin-top:16px; color:var(--ink-soft); font-size:16px; line-height:1.6;}
+  .section-head.center{margin-left:auto; margin-right:auto; text-align:center;}
+  .section-head.center .eyebrow{justify-content:center;}
+
+  /* ===== WHY STACKLY / FEATURES ===== */
+  .feature-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:20px; overflow:hidden;}
+  .feature-card{background:var(--paper-dim); padding:36px 28px; transition:background .35s ease, transform .45s cubic-bezier(.2,.9,.25,1); transform-style:preserve-3d; will-change:transform;}
+  .feature-card:hover{background:var(--paper-dim);}
+  .feature-num{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--cyan); margin-bottom:22px; display:block; transition:transform .4s ease;}
+  .feature-card:hover .feature-num{transform:translateX(4px);}
+  .feature-card h3{font-size:18px; margin-bottom:10px;}
+  .feature-card p{font-size:13.5px; color:var(--ink-soft); line-height:1.6;}
+
+  .reveal-x{opacity:0; will-change:transform, opacity;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+
+  /* ===== SPATIAL BACKGROUND ===== */
+  .spatial-canvas{position:fixed; inset:0; width:100%; height:100%; z-index:-2; pointer-events:none;}
+  .nebula{position:fixed; z-index:-1; border-radius:50%; filter:blur(80px); pointer-events:none; opacity:0.22;}
+  .neb1{width:560px; height:560px; background:var(--violet); top:-140px; left:-120px; animation:nebDrift1 48s ease-in-out infinite;}
+  .neb2{width:480px; height:480px; background:var(--cyan); bottom:-160px; right:-100px; animation:nebDrift2 56s ease-in-out infinite;}
+  .neb3{width:400px; height:400px; background:var(--rose); top:38%; right:12%; animation:nebDrift3 62s ease-in-out infinite;}
+  @keyframes nebDrift1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(110px,90px) scale(1.18);}}
+  @keyframes nebDrift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-100px,-80px) scale(1.12);}}
+  @keyframes nebDrift3{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-90px,70px) scale(1.22);}}
+  @media (prefers-reduced-motion: reduce){.nebula{animation:none;}}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:1080px){
+    .feature-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:900px){
+    nav.main-nav{display:none;}
+    .hamburger{display:flex;}
+    .header-actions .btn-login{display:none;}
+  }
+  @media (max-width:760px){
+    .wrap{padding:0 20px;}
+    .header-inner{padding:0 20px;}
+    section{padding:52px 0;}
+    .cta-banner{margin:0 12px; padding:48px 24px;}
+    .feature-grid{grid-template-columns:1fr;}
+  }
+
+  /* ===== PAGE HERO (interior pages) ===== */
+  .page-hero{position:relative; padding:calc(var(--header-h) + 90px) 0 90px; overflow:hidden;}
+  .page-hero-bg{position:absolute; inset:0; z-index:-2; background-size:cover; background-position:center; background-repeat:no-repeat; transform:scale(1.08); opacity:0;}
+  .page-hero .wrap{position:relative; z-index:2;}
+  .breadcrumb{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-soft); margin-bottom:16px; display:flex; gap:8px; align-items:center; overflow:hidden;}
+  .breadcrumb a{color:var(--cyan);}
+  .page-hero h1{font-size:clamp(34px,5vw,58px); font-weight:700; max-width:720px; overflow:hidden;}
+  .page-hero h1 .line{display:block; overflow:hidden;}
+  .page-hero h1 .line span{display:inline-block; will-change:transform;}
+  .page-hero p.sub{margin-top:18px; max-width:560px; font-size:16.5px; color:var(--ink-soft); line-height:1.65;}
+  .hero-badge-row{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+  .hero-badge{
+    display:flex; align-items:center; gap:8px; padding:9px 16px; border-radius:100px;
+    background:#fff; border:1px solid var(--line); font-size:12.5px; font-family:'JetBrains Mono', monospace;
+    color:var(--ink-soft);
+  }
+  .hero-badge i{width:7px; height:7px; border-radius:50%; background:var(--cyan); display:inline-block; font-style:normal;}
+
+  /* ===== TIMELINE ===== */
+  .timeline{position:relative; max-width:760px; margin:0 auto; padding-left:28px; border-left:1.5px solid var(--line);}
+  .timeline-line-fill{
+    position:absolute; left:-1.5px; top:0; width:1.5px; height:0; background:var(--violet);
+  }
+  .timeline-item{position:relative; padding-bottom:52px;}
+  .timeline-item:last-child{padding-bottom:0;}
+  .timeline-item::before{content:''; position:absolute; left:-33.5px; top:4px; width:11px; height:11px; border-radius:50%; background:var(--violet); border:3px solid var(--paper); transition:transform .4s cubic-bezier(.2,.9,.25,1), background .4s ease;}
+  .timeline-item.in-view::before{transform:scale(1.25); background:var(--cyan);}
+  .timeline-item .t-year{font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--cyan); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; display:block;}
+  .timeline-item h3{font-size:20px; margin-bottom:8px;}
+  .timeline-item p{font-size:14.5px; color:var(--ink-soft); line-height:1.6; max-width:520px;}
+
+  /* ===== SPLIT CONTENT (mission / story) ===== */
+  .split-content{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+  .split-media{position:relative; border-radius:20px; overflow:hidden;}
+  .split-media .reveal-panel{position:absolute; inset:0; background:var(--ink); z-index:2; transform-origin:left;}
+  .split-content img{border-radius:20px; width:100%; height:420px; object-fit:cover; transform:scale(1.15); transition:transform 1.2s cubic-bezier(.2,.9,.25,1);}
+  .split-media.revealed img{transform:scale(1);}
+  .split-content h2{font-size:clamp(26px,3.2vw,38px); margin-bottom:18px;}
+  .split-content p{color:var(--ink-soft); font-size:15.5px; line-height:1.7; margin-bottom:14px;}
+  .split-content.reverse{grid-template-columns:1fr 1fr;}
+  .split-content.reverse .split-media{order:2;}
+
+  /* ===== MENTORS ===== */
+  .mentor-row{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .mentor-card{
+    display:flex; flex-direction:column; gap:16px;
+    padding:22px; border:1px solid var(--line); border-radius:18px; background:#fff;
+    transition:transform .4s cubic-bezier(.2,.9,.25,1), box-shadow .4s ease;
+  }
+  .mentor-card:hover{transform:translateY(-8px); box-shadow:0 26px 50px -24px rgba(19,27,51,0.35);}
+  .mentor-card .mentor-img{width:100%; height:300px; border-radius:14px; overflow:hidden;}
+  .mentor-card img{width:100%; height:100%; object-fit:cover; object-position:center top; transition:transform .6s ease;}
+  .mentor-card:hover img{transform:scale(1.08);}
+  .mentor-card h3{font-size:18px; margin-bottom:4px;}
+  .mentor-role{font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--cyan); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px; display:block;}
+  .mentor-card p{font-size:13.5px; color:var(--ink-soft); line-height:1.55;}
+
+  /* ===== VALUES-IN-ACTION STRIP ===== */
+  .proof-strip{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:20px; overflow:hidden;
+  }
+  .proof-card{background:var(--ink); color:var(--paper); padding:40px 32px; position:relative; overflow:hidden;}
+  .proof-card::after{
+    content:''; position:absolute; inset:0; background:radial-gradient(circle at 30% 20%, rgba(242,169,59,0.18), transparent 60%);
+    opacity:0; transition:opacity .5s ease;
+  }
+  .proof-card:hover::after{opacity:1;}
+  .proof-card b{font-family:'Space Grotesk', sans-serif; font-size:34px; display:block; margin-bottom:10px;}
+  .proof-card span{font-size:13px; color:rgba(246,244,239,0.6); line-height:1.5; display:block;}
+
+  /* ===== COMPARISON TABLE (traditional vs stackly) ===== */
+  .compare-wrap{border:1px solid var(--line); border-radius:20px; overflow:hidden; background:#fff;}
+  .compare-head{display:grid; grid-template-columns:1.2fr 1fr 1fr;}
+  .compare-head div{padding:20px 26px; font-family:'JetBrains Mono', monospace; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); min-width:0;}
+  .compare-head .ch-stackly{background:var(--ink); color:var(--paper);}
+  .compare-row{display:grid; grid-template-columns:1.2fr 1fr 1fr; border-top:1px solid var(--line);}
+  .compare-row > div{padding:20px 26px; font-size:14.5px; display:flex; align-items:flex-start; gap:8px; min-width:0;}
+  .compare-row .cr-label{color:var(--ink); font-weight:600; font-size:14.5px;}
+  .compare-row .cr-no, .compare-row .cr-yes{min-width:0;}
+  .compare-row .cr-no .mark, .compare-row .cr-yes .mark{flex:0 0 auto; font-weight:700;}
+  .compare-row .cr-yes .mark{color:var(--cyan);}
+  .compare-row .cr-no .mark{color:var(--ink-soft);}
+  .compare-row .cr-no .txt, .compare-row .cr-yes .txt{flex:1 1 auto; min-width:0; overflow-wrap:break-word; word-break:break-word;}
+  .compare-row .cr-no .txt{color:var(--ink-soft);}
+  .compare-row .cr-yes .txt{color:var(--ink); font-weight:500;}
+
+  /* ===== FAQ ===== */
+  .faq-list{max-width:820px; margin:0 auto; display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:20px; overflow:hidden;}
+  .faq-item{background:#fff; padding:0;}
+  .faq-item summary{
+    padding:24px 28px; font-family:'Space Grotesk', sans-serif; font-size:17px; font-weight:600;
+    cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{
+    content:'+'; font-size:22px; color:var(--cyan); font-weight:400; flex-shrink:0;
+    transition:transform .35s ease;
+  }
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item .faq-body{padding:0 28px 24px; color:var(--ink-soft); font-size:14.5px; line-height:1.7; max-width:640px;}
+
+  .cta-banner{
+    margin:0 24px; border-radius:32px; padding:64px 48px; text-align:center;
+    background:linear-gradient(135deg, var(--violet), var(--rose));
+    position:relative; overflow:hidden;
+  }
+  .cta-banner::before{
+    content:''; position:absolute; width:420px; height:420px; border-radius:50%;
+    background:rgba(255,255,255,0.14); top:-220px; right:-140px;
+  }
+  .cta-banner h2{font-size:clamp(28px,4.4vw,48px); color:var(--ink); max-width:680px; margin:0 auto; position:relative; z-index:2;}
+  .cta-banner p{margin-top:16px; color:rgba(19,27,51,0.75); font-size:16px; position:relative; z-index:2;}
+  .cta-banner .btn-primary{margin-top:32px; background:var(--ink); color:var(--paper); position:relative; z-index:2;}
+
+  @media (max-width:1080px){
+    .split-content{grid-template-columns:1fr;}
+    .split-content img{height:300px;}
+    .mentor-row{grid-template-columns:1fr 1fr;}
+    .proof-strip{grid-template-columns:1fr;}
+    .compare-head, .compare-row{grid-template-columns:1fr 1fr 1fr;}
+  }
+  @media (max-width:760px){
+    .mentor-row{grid-template-columns:1fr;}
+    .mentor-card .mentor-img{height:340px;}
+    .compare-head div, .compare-row > div{padding:14px 12px; font-size:12.5px;}
+  }
+  @media (max-width:560px){
+    /* Below this, three squeezed columns clip text — stack each row into a mini card instead */
+    .compare-head{display:none;}
+    .compare-wrap{border-radius:16px;}
+    .compare-row{
+      grid-template-columns:1fr; border-top:1px solid var(--line); padding:16px 16px 4px;
+    }
+    .compare-row:first-child{border-top:none;}
+    .compare-row > div{padding:0 0 12px; font-size:13.5px;}
+    .compare-row .cr-label{font-size:14.5px; padding-bottom:10px;}
+    .compare-row .cr-no .txt::before{content:'Traditional course: '; color:var(--ink-soft); font-weight:600;}
+    .compare-row .cr-yes .txt::before{content:'Stackly: '; color:var(--ink); font-weight:700;}
+  }
+
+  /* ===== FOOTER ===== */
+  footer{padding:90px 0 40px; background:rgba(5,4,15,0.92); backdrop-filter:blur(14px); color:var(--paper); border-radius:32px 32px 0 0; margin-top:10px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr repeat(3, 1fr); gap:40px; align-items:start; padding-bottom:60px; border-bottom:1px solid rgba(246,244,239,0.14);}
+  .footer-brand p{color:rgba(246,244,239,0.6); font-size:14.5px; margin-top:14px; max-width:280px; line-height:1.6;}
+  .footer-col h4{font-family:'JetBrains Mono', monospace; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:16px; color:rgba(246,244,239,0.45);}
+  .footer-col a{display:block; font-size:14.5px; padding:6px 0; color:rgba(246,244,239,0.82); transition:transform .3s ease, color .3s ease;}
+  .footer-col a:hover{color:var(--violet); transform:translateX(4px);}
+  .footer-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:26px; flex-wrap:wrap; gap:12px;}
+  .footer-bottom span{font-size:13px; color:rgba(246,244,239,0.5);}
+  .social-row{display:flex; gap:14px; margin-top:22px;}
+  .social-row a{
+    position:relative; width:38px; height:38px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; z-index:0; overflow:visible;
+    border:1px solid rgba(246,244,239,0.25); color:var(--paper);
+    transition:transform .4s cubic-bezier(.2,.9,.25,1), border-color .4s ease, color .35s ease;
+  }
+  .social-row a svg{position:relative; z-index:2; width:16px; height:16px; transition:transform .35s cubic-bezier(.2,.9,.25,1);}
+  .social-row a::before{
+    content:''; position:absolute; inset:-5px; border-radius:50%; z-index:1;
+    opacity:0; transform:scale(.5); filter:blur(1px);
+    transition:opacity .45s ease, transform .45s cubic-bezier(.2,.9,.25,1);
+  }
+  .social-row a[data-brand="facebook"]::before{background:radial-gradient(circle at 32% 28%, #6aa2ff, #1355d6 70%);}
+  .social-row a[data-brand="x"]::before{background:radial-gradient(circle at 32% 28%, #4a4a4a, #050505 70%);}
+  .social-row a[data-brand="linkedin"]::before{background:radial-gradient(circle at 32% 28%, #5fc9ff, #0a66c2 70%);}
+  .social-row a[data-brand="instagram"]::before{background:radial-gradient(circle at 30% 112%, #fdf497 0%, #fd5949 42%, #d6249f 62%, #285aeb 92%);}
+  .social-row a:hover{border-color:transparent; color:#fff; transform:translateY(-4px);}
+  .social-row a:hover svg{transform:scale(1.1);}
+  .social-row a:hover::before{opacity:1; transform:scale(1); filter:blur(0px);}
+  .footer-legal{display:flex; gap:22px; flex-wrap:wrap;}
+  .footer-legal a{font-size:13px; color:rgba(246,244,239,0.5); transition:color .3s ease;}
+  .footer-legal a:hover{color:var(--paper);}
+  /* ===== NAV — persistent underline on the current page (desktop + hamburger) ===== */
+  nav.main-nav a.active{color:var(--paper);}
+  nav.main-nav a.active::after{width:100%;}
+  .mobile-menu a{position:relative;}
+  .mobile-menu a::after{content:''; position:absolute; left:0; bottom:9px; width:0; height:2px; background:var(--violet); transition:width .3s ease;}
+  .mobile-menu a.active{color:var(--violet);}
+  .mobile-menu a.active::after{width:34px;}
+
+  /* ===== FOOTER — unified layout, no curve, overflow-safe (same on every page/device) ===== */
+  footer{border-radius:0;}
+  .footer-grid{grid-template-columns:1.4fr repeat(3,1fr); align-items:start;}
+  .footer-grid > *{min-width:0;}
+  .footer-brand p{max-width:280px; font-size:14.5px;}
+  .footer-col a{overflow-wrap:anywhere;}
+  @media (max-width:1080px){
+    .footer-grid{grid-template-columns:repeat(3, 1fr); row-gap:44px;}
+    .footer-brand{grid-column:1 / -1;}
+    .footer-brand p{max-width:460px;}
+  }
+  @media (max-width:640px){
+    .footer-grid{grid-template-columns:1fr; gap:36px;}
+    .footer-brand{grid-column:auto;}
+  }
+</style>
+
+</head>
+<body>
+<canvas class="spatial-canvas" id="spatialCanvas"></canvas>
+<div class="nebula neb1"></div>
+<div class="nebula neb2"></div>
+<div class="nebula neb3"></div>
+
+
+<div class="page-transition" id="pageTransition"><span>STACKLY</span></div>
+
+<div class="blueprint-dots"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><img src="stackly-logo.webp" alt="Stackly logo" class="logo-mark" onerror="this.style.display='none'"><span class="lg-stack">Stack</span><span class="lg-ly">ly</span></a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="courses.html">Courses</a>
+      <a href="ourstory.html">Our Story</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="login.html" class="btn-login">Log in</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="menu-close" id="menuClose" aria-label="Close menu">&#10005;</button>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="courses.html">Courses</a>
+  <a href="ourstory.html">Our Story</a>
+  <a href="contact.html">Contact</a>
+  <a href="login.html" class="btn btn-primary"><span class="glint"></span>Log in</a>
+</div>
+
+<main>
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg" id="pageHeroBg" style="background-image:linear-gradient(100deg, rgba(246,244,239,0.97) 0%, rgba(246,244,239,0.93) 32%, rgba(246,244,239,0.6) 58%, rgba(246,244,239,0.2) 80%, rgba(19,27,51,0.04) 100%), url('./assets/about\ bg.webp');"></div>
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>About</span></div>
+    <div class="eyebrow">About Stackly</div>
+    <h1><span class="line"><span>We build proof,</span></span><span class="line"><span>not just certificates.</span></span></h1>
+    <p class="sub">Stackly's Skill Development Academy exists for one reason — too many courses end in a badge nobody checks. We end ours in a portfolio a hiring manager actually opens.</p>
+    <div class="hero-badge-row">
+      <div class="hero-badge"><i></i>Founded 2021, Salem</div>
+      <div class="hero-badge"><i></i>60+ industry mentors</div>
+      <div class="hero-badge"><i></i>120+ hiring partners</div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section>
+  <div class="wrap split-content">
+    <div class="split-copy">
+      <div class="eyebrow">Our mission</div>
+      <h2>Skill should be provable, not just claimed</h2>
+      <p>We started Stackly after watching too many capable learners get filtered out of interviews for not having the "right" credential — while their actual work was strong. So we built an academy around the thing that actually convinces a hiring manager: a reviewed, real-world project.</p>
+      <p>Every track pairs structured learning with a working mentor who reviews your build the way a senior teammate would — line by line, decision by decision — until it's genuinely ready to show.</p>
+      <a href="./404.html" class="btn btn-primary"><span class="glint"></span>See how it works</a>
+    </div>
+    <div class="split-media reveal-split">
+      <div class="reveal-panel"></div>
+      <img src="./assets/mentor works.webp" alt="Mentor and learner reviewing work together">
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section>
+  <div class="wrap">
+    <div class="section-head center reveal-x" data-dir="left" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">Our story</div>
+      <h2>How Stackly came together</h2>
+      <p>Five years, four cities, one recurring conversation with hiring managers: "I need to see what they've actually built."</p>
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="timeline-line-fill" id="timelineFill"></div>
+      <div class="timeline-item">
+        <span class="t-year">2021 · Salem</span>
+        <h3>Stackly starts as a weekend workshop</h3>
+        <p>Twelve learners, one mentor, one Full-Stack brief. No certificate — just a project review and a list of what to fix.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="t-year">2022 · First cohort model</span>
+        <h3>We cap every cohort at 25</h3>
+        <p>Small enough for a mentor to actually know each learner's work, and for the cohort itself to become a network.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="t-year">2023 · Hiring partners join</span>
+        <h3>Graduates start getting introduced directly</h3>
+        <p>Instead of issuing a certificate and hoping, we began introducing graduates straight to teams hiring for that track's skill set.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="t-year">2024 · Four tracks live</span>
+        <h3>Data, Design, Cloud and Full-Stack, side by side</h3>
+        <p>Each new track had to clear the same bar: a real brief, a working mentor, and a capstone worth showing.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="t-year">2026 · Today</span>
+        <h3>18,400+ learners, 92% job-ready in six months</h3>
+        <p>Still the same weekend-workshop instinct at the core: build something real, get it reviewed by someone who's done the job.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE STAND FOR -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal-x" data-dir="left">
+      <div class="eyebrow">What we stand for</div>
+      <h2>Four principles behind every track</h2>
+      <p>These aren't marketing lines — they're the constraints every new track has to satisfy before we launch it.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="feature-num">01 / Real work</span>
+        <h3>Briefs modeled on real problems</h3>
+        <p>No toy datasets or made-up apps — every project mirrors a brief a client or product team would actually hand you.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-num">02 / Human review</span>
+        <h3>A mentor who's done the job</h3>
+        <p>Feedback comes from someone shipping this work today, not a rubric or an automated grader.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-num">03 / Small cohorts</span>
+        <h3>20–25 learners, not 2,000</h3>
+        <p>Small enough that your mentor knows your work, and your cohort actually becomes a network.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-num">04 / Real outcomes</span>
+        <h3>An intro, not just a certificate</h3>
+        <p>Graduates are introduced directly to hiring partners looking for that track's exact skill set.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="wrap">
+    <div class="stat reveal-stat"><b>18,400+</b><span>Learners trained</span></div>
+    <div class="stat reveal-stat"><b>92%</b><span>Job-ready in 6 months</span></div>
+    <div class="stat reveal-stat"><b>60+</b><span>Industry mentors</span></div>
+    <div class="stat reveal-stat"><b>120+</b><span>Hiring partners</span></div>
+  </div>
+</div>
+
+<!-- VALUES IN ACTION -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal-x" data-dir="left">
+      <div class="eyebrow">Proof over promises</div>
+      <h2>What "review" actually means here</h2>
+      <p>Three things every mentor review checks before a project counts as capstone-ready.</p>
+    </div>
+    <div class="proof-strip">
+      <div class="proof-card">
+        <b>Line by line</b>
+        <span>Mentors read the actual code or files, not a demo video — the same way a hiring manager eventually will.</span>
+      </div>
+      <div class="proof-card">
+        <b>Decision by decision</b>
+        <span>You explain why you built it that way. If the reasoning doesn't hold up, it goes back for another pass.</span>
+      </div>
+      <div class="proof-card">
+        <b>Interview-ready</b>
+        <span>The capstone becomes the first thing you walk a hiring manager through — because it can survive that conversation.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY WE'RE DIFFERENT -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal-x" data-dir="left">
+      <div class="eyebrow">Why we're different</div>
+      <h2>Traditional courses vs. Stackly</h2>
+      <p>Side by side, the difference isn't the syllabus — it's what happens after you submit the work.</p>
+    </div>
+    <div class="compare-wrap reveal-x" data-dir="right">
+      <div class="compare-head">
+        <div></div>
+        <div>Traditional course</div>
+        <div class="ch-stackly">Stackly</div>
+      </div>
+      <div class="compare-row">
+        <div class="cr-label">Who reviews your work</div>
+        <div class="cr-no"><span class="mark">—</span><span class="txt">Automated grader</span></div>
+        <div class="cr-yes"><span class="mark">✓</span><span class="txt">A mentor doing the job today</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="cr-label">Cohort size</div>
+        <div class="cr-no"><span class="mark">—</span><span class="txt">Thousands, self-paced</span></div>
+        <div class="cr-yes"><span class="mark">✓</span><span class="txt">20–25 learners</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="cr-label">Final deliverable</div>
+        <div class="cr-no"><span class="mark">—</span><span class="txt">Certificate of completion</span></div>
+        <div class="cr-yes"><span class="mark">✓</span><span class="txt">Interview-ready capstone</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="cr-label">What happens after</div>
+        <div class="cr-no"><span class="mark">—</span><span class="txt">You apply cold</span></div>
+        <div class="cr-yes"><span class="mark">✓</span><span class="txt">Direct intro to hiring partners</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENTORS PREVIEW -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal-x" data-dir="left">
+      <div class="eyebrow">Who reviews your work</div>
+      <h2>A few of the mentors behind the tracks</h2>
+      <p>Every mentor is currently shipping the work they teach — not a former practitioner, a current one.</p>
+    </div>
+    <div class="mentor-row">
+      <div class="mentor-card">
+        <div class="mentor-img"><img src="./assets/Mentor portrait g2.webp" alt="Mentor portrait"></div>
+        <div>
+          <h3>Full-Stack track</h3>
+          <span class="mentor-role">Senior engineer, product team</span>
+          <p>Reviews every capstone for the same things a real code review would catch.</p>
+        </div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-img"><img src="./assets/Mentor portraitw1.webp" alt="Mentor portrait"></div>
+        <div>
+          <h3>Data Analytics track</h3>
+          <span class="mentor-role">Lead analyst, fintech</span>
+          <p>Pushes learners past a clean chart to a dashboard someone would actually act on.</p>
+        </div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-img"><img src="./assets/Mentor portrait g1.webp" alt="Mentor portrait"></div>
+        <div>
+          <h3>UI/UX Design track</h3>
+          <span class="mentor-role">Product designer</span>
+          <p>Critiques case studies weekly, the same way a design lead would review a junior's work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOGNITION -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal-x" data-dir="left">
+      <div class="eyebrow">Recognition</div>
+      <h2>Backed by the people who hire</h2>
+      <p>None of this matters unless the outcomes hold up — here's what's actually followed from it.</p>
+    </div>
+    <div class="proof-strip">
+      <div class="proof-card">
+        <b>NASSCOM listed</b>
+        <span>Recognized under NASSCOM FutureSkills as an accredited upskilling partner.</span>
+      </div>
+      <div class="proof-card">
+        <b>4.8 / 5 rating</b>
+        <span>Average learner rating across 2,300+ verified reviews on independent course-review platforms.</span>
+      </div>
+      <div class="proof-card">
+        <b>120+ partners</b>
+        <span>Hiring partners spanning product startups, agencies, and fintech teams across India.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap">
+    <div class="section-head center reveal-x" data-dir="left" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">Common questions</div>
+      <h2>Before you talk to an advisor</h2>
+      <p>The things most learners ask before enrolling in a track.</p>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Do I need coding experience to start?</summary>
+        <div class="faq-body">No. Each track starts from fundamentals, but the pace assumes you'll practice outside sessions — mentors review your capstone, not your attendance.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is this online, in-person, or both?</summary>
+        <div class="faq-body">Fully online, live with your cohort. Sessions are recorded, but mentor reviews happen in real time so you get direct feedback, not a comment queue.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What if I miss a mentor review?</summary>
+        <div class="faq-body">You can rebook within the same week. Cohorts are small enough that mentors keep slots open for exactly this.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you guarantee a job?</summary>
+        <div class="faq-body">No program can honestly guarantee that. What we guarantee is a reviewed, interview-ready capstone and a direct introduction to hiring partners looking for that track's skill set.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How is pricing structured?</summary>
+        <div class="faq-body">Pricing varies by track and cohort length. An advisor will walk you through the current cost and any active cohort discounts before you commit to anything.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact">
+  <div class="cta-banner reveal-x" data-dir="left">
+    <h2>Want to see a track up close?</h2>
+    <p>Talk to an academy advisor and get matched to the right track this week.</p>
+    <a href="./404.html" class="btn btn-primary"><span class="glint"></span>Talk to an advisor</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><img src="stackly-logo.webp" alt="Stackly logo" class="logo-mark" onerror="this.style.display='none'"><span class="lg-stack">Stack</span><span class="lg-ly">ly</span></a>
+        <p>Cohort-based, mentor-reviewed learning tracks that end in a portfolio, not just a certificate.</p>
+        <div class="social-row">
+          <a href="./404.html" aria-label="Facebook" data-brand="facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94Z"/></svg></a>
+          <a href="./404.html" aria-label="X" data-brand="x"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.5h3.3l-7.2 8.23 8.47 11.27h-6.63l-5.19-6.79-5.94 6.79H1.75l7.7-8.8L1.34 2.5h6.8l4.69 6.2 5.41-6.2Zm-1.16 17.53h1.83L7.02 4.4H5.06l12.02 15.63Z"/></svg></a>
+          <a href="./404.html" aria-label="LinkedIn" data-brand="linkedin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5.5a2.44 2.44 0 1 1-4.88 0 2.44 2.44 0 0 1 4.88 0ZM2.4 8.75h4.1V21.5H2.4V8.75Zm7.13 0h3.93v1.74h.06c.55-1.03 1.9-2.12 3.9-2.12 4.17 0 4.94 2.74 4.94 6.3v6.83h-4.1v-6.06c0-1.44-.03-3.3-2.02-3.3-2.02 0-2.33 1.57-2.33 3.2v6.16h-4.1V8.75Z"/></svg></a>
+          <a href="./404.html" aria-label="Instagram" data-brand="instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.6" r="1.05" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="courses.html">Courses</a>
+        <a href="ourstory.html">Our Story</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="./404.html">About Stackly</a>
+        <a href="./404.html">Careers</a>
+        <a href="./404.html">Hiring Partners</a>
+        <a href="./404.html">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="./404.html">hello@stackly.academy</a>
+        <a href="./404.html">Salem, India</a>
+        <a href="./404.html">Support</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Stackly. All rights reserved.</span>
+      <nav class="footer-legal">
+        <a href="./404.html">Privacy Policy</a>
+        <a href="./404.html">Cookies</a>
+        <a href="./404.html">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ===== Page load transition ===== */
+window.addEventListener('load', () => {
+  gsap.to('#pageTransition', {
+    yPercent:-100, duration:.9, ease:'power4.inOut', delay:.15,
+    onComplete:() => { document.getElementById('pageTransition').style.display='none'; }
+  });
+});
+
+/* Hamburger */
+/* Highlight the current page in the nav + hamburger menu */
+(function(){
+  var path = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('nav.main-nav a, .mobile-menu a').forEach(function(a){
+    var href = (a.getAttribute('href') || '').split('/').pop();
+    if(href === path) a.classList.add('active');
+  });
+})();
+
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mobileMenu.classList.toggle('open');
+});
+const menuClose = document.getElementById('menuClose');
+if(menuClose){
+  menuClose.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('open');
+  });
+}
+mobileMenu.querySelectorAll('a, .btn').forEach(el => {
+  el.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+/* Header stays visible on scroll; just gets a solid backdrop once scrolled */
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  if(window.scrollY > 40){ header.classList.add('scrolled'); }
+  else { header.classList.remove('scrolled'); }
+}, {passive:true});
+
+/* Page hero text + background reveal */
+gsap.set('.page-hero h1 .line span', {yPercent: 110});
+gsap.set('.breadcrumb', {opacity:0, y:-10});
+gsap.set('#pageHeroBg', {opacity:0});
+
+gsap.timeline({delay:.9})
+  .to('#pageHeroBg', {opacity:1, duration:1.6, ease:'power2.out'}, 0)
+  .to('.breadcrumb', {opacity:1, y:0, duration:.6, ease:'power3.out'}, 0.15)
+  .to('.page-hero h1 .line span', {yPercent:0, duration:1, stagger:0.12, ease:'power4.out'}, '-=0.2')
+  .from('.page-hero p.sub', {opacity:0, y:20, duration:.7, ease:'power3.out'}, '-=0.5')
+  .from('.hero-badge-row .hero-badge', {opacity:0, y:14, duration:.5, stagger:0.1, ease:'power3.out'}, '-=0.4');
+
+/* Page hero background parallax on scroll only — never touches opacity, so it never fades back out */
+gsap.to('#pageHeroBg', {
+  scale:1, y:40, ease:'none', overwrite:'auto',
+  scrollTrigger:{trigger:'.page-hero', start:'top top', end:'bottom top', scrub:true}
+});
+
+/* Left/right scroll-triggered reveals */
+document.querySelectorAll('.reveal-x').forEach(el => {
+  const dir = el.dataset.dir === 'right' ? 70 : -70;
+  gsap.fromTo(el, {opacity:0, x:dir}, {
+    opacity:1, x:0, duration:1.1, ease:'power3.out',
+    scrollTrigger:{trigger:el, start:'top 88%'}
+  });
+});
+
+/* Stats bar entrance */
+if(document.querySelector('.stats-bar')){
+  gsap.to('.reveal-stat', {
+    opacity:1, y:0, duration:.9, stagger:0.12, ease:'power3.out',
+    scrollTrigger:{trigger:'.stats-bar', start:'top 88%'}
+  });
+}
+
+/* Split-media image reveal (curtain wipe) */
+document.querySelectorAll('.reveal-split').forEach(el => {
+  ScrollTrigger.create({
+    trigger:el, start:'top 78%', once:true,
+    onEnter:() => {
+      gsap.to(el.querySelector('.reveal-panel'), {
+        scaleX:0, duration:1, ease:'power4.inOut',
+        onComplete:() => el.classList.add('revealed')
+      });
+      el.classList.add('revealed');
+    }
+  });
+});
+
+/* Timeline draw-in line + dot pulse per item */
+const timelineEl = document.getElementById('timeline');
+if(timelineEl){
+  gsap.to('#timelineFill', {
+    height:'100%', ease:'none',
+    scrollTrigger:{trigger:timelineEl, start:'top 60%', end:'bottom 80%', scrub:true}
+  });
+  document.querySelectorAll('.timeline-item').forEach(item => {
+    gsap.from(item, {
+      opacity:0, x:-30, duration:.8, ease:'power3.out',
+      scrollTrigger:{trigger:item, start:'top 85%'}
+    });
+    ScrollTrigger.create({
+      trigger:item, start:'top 60%', end:'bottom 40%',
+      onEnter:() => item.classList.add('in-view'),
+      onLeaveBack:() => item.classList.remove('in-view')
+    });
+  });
+}
+
+/* Grouped, evenly-staggered reveals for grid/row sections so siblings animate in sync.
+   Pure opacity fade — no transform of any kind. Any transform (translate OR scale) on a
+   card inside a tightly-gapped, overflow:hidden grid briefly separates its rendered edges
+   from the grid cell, which shows up as either a gap bar or a faint seam/border around the
+   card once GPU compositing settles. Opacity alone changes no geometry, so nothing can leak. */
+gsap.utils.toArray('.proof-strip').forEach(strip => {
+  gsap.from(strip.querySelectorAll('.proof-card'), {
+    opacity:0, duration:.7, ease:'power1.out', stagger:0.12,
+    scrollTrigger:{trigger:strip, start:'top 85%'}
+  });
+});
+gsap.from('.mentor-row .mentor-card', {
+  opacity:0, duration:.7, ease:'power1.out', stagger:0.12,
+  scrollTrigger:{trigger:'.mentor-row', start:'top 85%'}
+});
+gsap.from('.feature-grid .feature-card', {
+  opacity:0, duration:.7, ease:'power1.out', stagger:0.1,
+  scrollTrigger:{trigger:'.feature-grid', start:'top 85%'}
+});
+gsap.from('.compare-row', {
+  opacity:0, duration:.6, ease:'power1.out', stagger:0.1,
+  scrollTrigger:{trigger:'.compare-wrap', start:'top 82%'}
+});
+gsap.from('.faq-list .faq-item', {
+  opacity:0, duration:.6, ease:'power1.out', stagger:0.1,
+  scrollTrigger:{trigger:'.faq-list', start:'top 85%'}
+});
+
+/* Feature card 3D tilt on hover (kept separate from entrance tween) */
+document.querySelectorAll('.feature-card').forEach((card) => {
+  card.addEventListener('mousemove', (e) => {
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    gsap.to(card, {rotateX: py * -6, rotateY: px * 6, duration:.4, ease:'power2.out', transformPerspective:600, overwrite:'auto'});
+  });
+  card.addEventListener('mouseleave', () => {
+    gsap.to(card, {rotateX:0, rotateY:0, duration:.5, ease:'power3.out', overwrite:'auto'});
+  });
+});
+
+/* Stats counter */
+document.querySelectorAll('.stat b').forEach(stat => {
+  const raw = stat.textContent.trim();
+  const num = parseFloat(raw.replace(/[^0-9.]/g,''));
+  if(isNaN(num)) return;
+  const suffix = raw.replace(/^[0-9.]+/,'');
+  const counter = {val:0};
+  ScrollTrigger.create({
+    trigger: stat, start:'top 90%', once:true,
+    onEnter:() => gsap.to(counter, {
+      val:num, duration:1.6, ease:'power2.out',
+      onUpdate:() => stat.textContent = (num % 1 === 0 ? Math.floor(counter.val) : counter.val.toFixed(1)) + suffix
+    })
+  });
+});
+</script>
+
+<script>
+/* ===== SPATIAL STARFIELD ===== */
+(function(){
+  var canvas = document.getElementById('spatialCanvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var stars = [], w, h, dpr;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var count = Math.round((w*h)/9000);
+    stars = [];
+    for(var i=0;i<count;i++){
+      stars.push({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*1.4+0.3,
+        baseA: Math.random()*0.5+0.25,
+        tw: Math.random()*Math.PI*2,
+        speed: Math.random()*0.02+0.05,
+        drift: Math.random()*0.15+0.04
+      });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(var i=0;i<stars.length;i++){
+      var s = stars[i];
+      s.tw += s.speed;
+      var a = s.baseA + Math.sin(s.tw)*0.28;
+      if(!reduceMotion){
+        s.y -= s.drift*0.06;
+        if(s.y < -4){ s.y = h+4; s.x = Math.random()*w; }
+      }
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(247,244,239,' + Math.max(a,0) + ')';
+      ctx.fill();
+    }
+  }
+  function loop(){ draw(); if(!reduceMotion) requestAnimationFrame(loop); }
+  resize();
+  window.addEventListener('resize', resize);
+  loop();
+})();
+</script>
+</body>
+</html>
